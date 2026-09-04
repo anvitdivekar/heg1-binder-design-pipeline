@@ -28,12 +28,12 @@ Designs are generated per-epitope, with multiple Rosetta sequence variants
 ## Repository contents
 
 .
-├── Snakefile # Pipeline orchestration (Snakemake)
-├── config.yaml # Epitope definitions, hotspots, tool paths, Rosetta/AF2 params
+├── Snakefile                     # Pipeline orchestration (Snakemake)
+├── config.yaml                   # Epitope definitions, hotspots, tool paths, Rosetta/AF2 params
 ├── scripts/
-│ ├── make_resfile.py # Builds Rosetta resfile from an RFdiffusion backbone
-│ ├── renumber.py # Renumbers binder/target chains post-Rosetta
-│ └── aggregate_results.py # Aggregates per-design AF2 score files into one ranked table
+│   ├── make_resfile.py           # Builds Rosetta resfile from an RFdiffusion backbone
+│   ├── renumber.py               # Renumbers binder/target chains post-Rosetta
+│   └── aggregate_results.py      # Aggregates per-design AF2 score files into one ranked table
 └── README.md
 
 
