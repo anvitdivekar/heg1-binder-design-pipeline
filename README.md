@@ -9,8 +9,9 @@ sensing.
 
 ## Pipeline overview
 
+```
 RFdiffusion → make_resfile → Rosetta fixbb → renumber → AF2 initial guess → aggregate
-
+```
 
 | Stage | Tool | What it does |
 |---|---|---|
@@ -27,6 +28,7 @@ Designs are generated per-epitope, with multiple Rosetta sequence variants
 
 ## Repository contents
 
+```
 .
 ├── Snakefile                     # Pipeline orchestration (Snakemake)
 ├── config.yaml                   # Epitope definitions, hotspots, tool paths, Rosetta/AF2 params
@@ -35,7 +37,7 @@ Designs are generated per-epitope, with multiple Rosetta sequence variants
 │   ├── renumber.py               # Renumbers binder/target chains post-Rosetta
 │   └── aggregate_results.py      # Aggregates per-design AF2 score files into one ranked table
 └── README.md
-
+```
 
 This repository contains **pipeline code only** — no design outputs,
 structures, logs, or intermediate results are included.
@@ -101,13 +103,14 @@ snakemake --cores <N>
 
 Output structure:
 
+```
 results/
-├── 00_rfdiffusion/ # RFdiffusion backbone outputs
-├── 01_rosetta/ # Rosetta fixbb sequence designs + resfiles
-├── 02_renumbered/ # Renumbered designs (binder chain first)
-├── 03_af2/ # AF2 initial guess predictions + per-design scores
-└── final_results_table.csv # Aggregated, ranked results across all designs
-
+├── 00_rfdiffusion/            # RFdiffusion backbone outputs
+├── 01_rosetta/                # Rosetta fixbb sequence designs + resfiles
+├── 02_renumbered/             # Renumbered designs (binder chain first)
+├── 03_af2/                    # AF2 initial guess predictions + per-design scores
+└── final_results_table.csv    # Aggregated, ranked results across all designs
+```
 
 ## Scoring
 
