@@ -1,0 +1,34 @@
+target_pdb: /home/apdivek/heg1_modeling/HEG1_truncated_1140-1260.pdb
+contigmap: "[A1140-1260/0 70-150]"
+
+epitopes:
+  ep1:
+    hotspot_res: "A1191,A1194,A1197,A1200,A1203"
+    n_designs: 400
+  ep2:
+    hotspot_res: "A1256,A1259,A1262,A1265,A1268"
+    n_designs: 100
+  ep3:
+    hotspot_res: "A1041,A1044,A1047,A1050"
+    n_designs: 400
+  ep4:
+    hotspot_res: "A1122,A1125,A1128,A1131"
+    n_designs: 100
+
+rosetta:
+  nstruct: 3
+  ex_flags: "-ex1 -ex2 -use_input_sc"
+  binary: /home/apdivek/rosetta_install/rosetta.binary.ubuntu.release-408/main/source/bin/fixbb.static.linuxgccrelease
+
+af2:
+  recycle: 3
+  script: /home/apdivek/dl_binder_design/af2_initial_guess/predict.py
+
+envs:
+  rfdiffusion: SE3nv
+  biopython: colabfold
+  af2: af2_binder_design
+
+parallelism:
+  rosetta_jobs: 40
+  af2_jobs: 40
