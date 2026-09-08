@@ -1,0 +1,32 @@
+mkdir -p ~/heg1_modeling/ipsae_analysis/full_run_ipsae
+cat > ~/heg1_modeling/ipsae_analysis/run_ipsae_batch.sh << 'EOF'
+#!/bin/bash
+# Runs ipsae on every completed design in full_run_output/ and writes
+# _15_15.txt results into full_run_ipsae/ (kept separate so re-runs
+# don't clutter full_run_output/ while the AF2 job is still writing there).
+set -e
+IN_DIR=~/heg1_modeling/ipsae_analysis/full_run_output
+OUT_DIR=~/heg1_modeling/ipsae_analysis/full_run_ipsae
+COUNT=0
+for pdb in "$IN_DIR"/*_af2pred.pdb; do
+    tag=$(basename "$pdb" _af2pred.pdb)
+    pae="$IN_DIR/${tag}_af2pred_pae.json"
+    out_txt="$OUT_DIR/${tag}_af2pred_15_15.txt"
+    if [ ! -f "$pae" ]; then
+        echo "  SKIP $tag: no pae json found"
+        continue
+    fi
+    if [ -f "$out_txt" ]; then
+        continue  # already scored, skip
+    fi
+    ipsae "$pae" "$pdb" 15 15 > /dev/null 2>&1 || echo "  FAILED: $tag"
+    # ipsae writes output next to the input pdb by default -- move it
+    if [ -f "$IN_DIR/${tag}_af2pred_15_15.txt" ]; then
+        mv "$IN_DIR/${tag}_af2pred_15_15.txt" "$out_txt"
+        COUNT=$((COUNT+1))
+    fi
+done
+echo "Scored $COUNT new designs. Total in $OUT_DIR: $(ls "$OUT_DIR"/*.txt 2>/dev/null | wc -l)"
+EOF
+chmod +x ~/heg1_modeling/ipsae_analysis/run_ipsae_batch.sh
+~/heg1_modeling/ipsae_analysis/run_ipsae_batch.sh
